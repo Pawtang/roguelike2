@@ -4,7 +4,7 @@ import React, {useState} from 'react';
 // import './Inventory'
 import MainMenu from './MainMenu'
 import PlayerCreation from './PlayerCreation'
-// import './Inventory'
+import Inventory from './Inventory'
 // import './Encounter'
 import Shop from './Shop'
 import Exploration from './Exploration'

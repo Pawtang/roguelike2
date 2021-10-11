@@ -52,3 +52,32 @@ li{
 .header{
     height: 200px;
 }
+
+.inventory{
+    width: 210px;
+    background-color: gray;
+    z-index: 2;
+    position: relative;
+    right: 0;
+    top: -400px;
+}
+
+.itemgrid{
+    display: grid;
+    grid-template-columns: repeat(4, 50px);
+    grid-template-rows: repeat(5, 50px);
+    gap: 2px;
+    margin: auto;
+    text-align: center;
+}
+
+.invitem:hover{
+    background-color: rgb(236, 236, 236);
+}
+
+.mapgrid{
+    display: grid;
+    grid-template-columns: repeat(10, 80px);
+    grid-template-rows: repeat(5, 80px);
+    margin: auto;
+}
