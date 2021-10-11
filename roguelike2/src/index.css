@@ -1,12 +1,54 @@
-@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
 
 *{
     margin: 0;
-    font-family: 'VT323', monospace;
+    font-family: 'Roboto Mono', monospace;
     color: white;
+    font-size: 20px;
+}
+
+h1{
+    color: yellow;
 }
 
 .textbox{
     background-color: #222;
 }
 
+div{
+    border: 1px solid red;
+}
+
+.gameArea{
+    width: 800px;
+    height: 600px;
+    margin: auto;
+    background-color: black;
+}
+
+button{
+    background-color: #222;
+}
+
+li{
+    list-style-type: none;
+    padding: 10px;
+}
+
+.menu{
+    display: flex;
+    flex-direction: column;
+}
+
+.menuHeader{
+    text-align: center;
+    margin: 100px 0px;
+}
+
+#title{
+    font-size: 2em;
+}
+
+.header{
+    height: 200px;
+}
