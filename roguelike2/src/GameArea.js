@@ -10,8 +10,6 @@ import Shop from './Shop'
 import Exploration from './Exploration'
 
 const GameArea = () => {
-
-
  // Curly braces = javascript 
 const [gamestate, setGameState] = useState('mainmenu');
 

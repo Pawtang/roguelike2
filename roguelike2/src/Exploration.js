@@ -8,55 +8,8 @@ const [inventorystate, setInventoryState] = useState('invclosed');
            <h2>This is the exploration area</h2>
            <div className="mapgrid">
                <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
-               <div className="maptile"></div>
+
+               
            </div>
            {(inventorystate === 'invopen') && (<button onClick = {() => setInventoryState('invclosed')}>Inventory</button>)}
            {(inventorystate === 'invclosed') && (<button onClick = {() => setInventoryState('invopen')}>Inventory</button>)}

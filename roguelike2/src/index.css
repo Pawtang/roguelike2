@@ -50,15 +50,15 @@ li{
 }
 
 .header{
-    height: 200px;
+    height: 100px;
 }
 
 .inventory{
     width: 210px;
     background-color: gray;
-    z-index: 2;
+    z-index: 1;
     position: relative;
-    right: 0;
+    left: 590px;
     top: -400px;
 }
 
@@ -81,3 +81,7 @@ li{
     grid-template-rows: repeat(5, 80px);
     margin: auto;
 }
+
+.invitem > img {
+    max-width: 100%;
+  }
