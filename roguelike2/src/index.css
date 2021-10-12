@@ -131,3 +131,7 @@ li{
 .placeholder:hover{
     background-color: none;
 }
+
+.draggable:active{
+    cursor: grabbing;
+}
