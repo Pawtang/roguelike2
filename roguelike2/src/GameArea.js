@@ -1,10 +1,10 @@
 import './index.css';
+import './sprites.css';
 import React, {useState} from 'react';
 // import './Credits'
 // import './Inventory'
 import MainMenu from './MainMenu'
 import PlayerCreation from './PlayerCreation'
-import Inventory from './Inventory'
 // import './Encounter'
 import Shop from './Shop'
 import Exploration from './Exploration'
