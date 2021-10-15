@@ -7,12 +7,10 @@ function MainMenu(props) {
       <div className="menuHeader">
         <h1 id="title">Cyber Cowboy 2077</h1>
       </div>
-      <div className="options">
-        <ul>
-            <li><a href="">New Game</a></li>
-            <li><a href="">Load from Code</a></li>
-            <li><a href="">Credits</a></li>
-        </ul>
+      <div className="flexcolumn center">
+          <button onClick = {() => setGameState('creation')}>New Game</button>
+          <button>Load Game</button>
+          <button>Credits</button>
       </div>
     </div>
   );
