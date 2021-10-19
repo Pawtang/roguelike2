@@ -1,4 +1,26 @@
+const itemLibrary = {
+  helmet1: {sprite: "A SPRITE 1", itemType: "helmet"},
+  helmet2: {sprite: "A SPRITE 2", itemType: "helmet"}
+}
+
+function getItemInfoForInventoryItems(inventoryItems) {
+  const inventoryItemsWithInfo = inventoryItems.map(inventoryItemId => {
+    const inventoryItem = itemLibrary[inventoryItemId];
+    return {
+      id: inventoryItemId,
+      ...inventoryItem
+    }
+  });
+  return inventoryItemsWithInfo;
+}
+
 const Inventory = () => {
+  const inventoryItems = ["helmet1", "helmet2"];
+  const inventoryItemsWithInfo = getItemInfoForInventoryItems(inventoryItems);
+  const totalItems = inventoryItems.length;
+  for (let i = 0; i < 20 - totalItems; i++) {
+    inventoryItemsWithInfo.push("0");
+  }
   return (
     <div className="inventory">
       <div className="inventorycontainer">
@@ -30,26 +52,18 @@ const Inventory = () => {
           </div>
         </div>
         <div className="itemgrid">
-          <div className="invitem"></div>
-          <div className="invitem"></div>
-          <div className="invitem"></div>
-          <div className="invitem"></div>
-          <div className="invitem"></div>
-          <div className="invitem"></div>
-          <div className="invitem"></div>
-          <div className="invitem"></div>
-          <div className="invitem"></div>
-          <div className="invitem"></div>
-          <div className="invitem"></div>
-          <div className="invitem"></div>
-          <div className="invitem"></div>
-          <div className="invitem"></div>
-          <div className="invitem"></div>
-          <div className="invitem"></div>
-          <div className="invitem"></div>
-          <div className="invitem"></div>
-          <div className="invitem"></div>
-          <div className="invitem"></div>
+          {
+            inventoryItemsWithInfo.map(inventoryItem => {
+               if (inventoryItem === "0") {
+                 return <div className="invitem"/>;
+               }
+               const {itemType, id} = inventoryItem;
+               return <div className="invitem"
+                           key={id}>
+                        <div class="sprite" id={itemType} draggable="true"/>
+                      </div>;
+            })
+          }
         </div>
       </div>
     </div>
