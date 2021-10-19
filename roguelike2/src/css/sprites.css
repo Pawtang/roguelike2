@@ -1,0 +1,39 @@
+.sprite {
+  width: 32px;
+  height: 32px;
+  background-image: url("../assets/weaponsprites.png");
+  position: relative;
+  left: 10px;
+}
+
+.eq {
+  zoom: 150%;
+}
+
+#woodensword {
+  background-position: 0 0;
+}
+
+#steelsword {
+  background-position: -0 -64px;
+}
+
+#woodenshield {
+  background-position: -128px -0;
+}
+
+#cuirass {
+  background-position: -256px -64px;
+}
+
+#helmet {
+  background-position: -224px -64px;
+}
+
+#boots {
+  background-position: -320px -64px;
+}
+
+#amulet {
+  background-position: -224px -64px;
+}
