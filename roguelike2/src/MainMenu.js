@@ -3,12 +3,12 @@ function MainMenu(props) {
   return (
     <div className="menu">
       <div className="menuHeader">
-        <h1 id="title">Cyber Cowboy 2077</h1>
+        <h1 id="title">CYBER COWBOY 2077</h1>
       </div>
       <div className="flexcolumn center">
-        <button onClick={() => setGameState("creation")}>New Game</button>
-        <button>Load Game</button>
-        <button>Credits</button>
+        <button onClick={() => setGameState("creation")} class="menubtn">New Game</button>
+        <button class="menubtn">Load Game</button>
+        <button class="menubtn">Credits</button>
       </div>
     </div>
   );

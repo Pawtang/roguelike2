@@ -24,7 +24,8 @@ const GameArea = () => {
         )}
         {gamestate === "exploration" && <Exploration />}
         {gamestate === "shop" && <Shop />}
-        {gamestate === "creation" && <PlayerCreation />}
+        {gamestate === "creation" && (
+          <PlayerCreation gamestate={gamestate} setGameState={setGameState} />)}
       </div>
     </div>
   );

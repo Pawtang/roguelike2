@@ -1,9 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 * {
   margin: 0;
-  font-family: "Roboto Mono", monospace;
+  font-family: "Roboto", sans-serif;
   color: white;
   font-size: 20px;
 }
@@ -20,7 +18,6 @@
   color: rgb(223, 223, 126);
   font-style: italic;
   font-size: 2em;
-  background-color: black;
   padding: 10px;
 }
 
@@ -37,26 +34,39 @@
 }
 
 button {
-  background-color: #222;
-  border-radius: 5px;
-  border: 1px solid gray;
+  background-color: rgba(0, 0, 0, .5);
+  backdrop-filter: blur(20px);
+  border: none;
   padding: 5px 10px;
+  cursor: pointer;
 }
 
-.options > button {
-  margin: 10px 0;
+.menubtn{
+  transition: all 300ms ease-out;
+  margin: 2px 0;
   width: 200px;
+  height: 50px;
+}
+
+.menubtn:hover{
+  transition: all 300ms ease-out;
+  width: 210px;
+  background-color: rgba(0, 0, 0, .6);
+  box-shadow: 4px 4px 12px black;
 }
 
 button:hover {
   background-color: #444;
+  transition: all 100ms ease-out;
+  background-color: rgba(0, 0, 0, .6);
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5)
 }
 
 .menu {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-image: url("../assets/pixelbg.png");
+  background-image: url("../assets/bg.jpg");
   box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.3);
   background-size: cover;
 }
@@ -64,6 +74,11 @@ button:hover {
 .flexcolumn {
   display: flex;
   flex-direction: column;
+}
+
+.flexrow{
+  display: flex;
+  flex-direction: row;
 }
 
 .grid {
@@ -81,11 +96,21 @@ button:hover {
   align-items: center;
 }
 
-.stat {
-  display: flex;
-  flex-direction: row;
+.player-image{
+  float: left;
+  margin: 10px auto;
+  width: 70%;
+  border: 1px solid red;
+}
+
+.creation{
   width: 80%;
+  margin: auto;
+}
+
+.stat {
   justify-content: center;
+  margin: 2px;
 }
 
 .menuHeader {
@@ -133,8 +158,6 @@ button:hover {
 .inventorycontainer {
   width: 600px;
   padding: 20px 0;
-  display: flex;
-  flex-direction: row;
   background-color: rgba(0, 0, 0, 0.6);
 }
 
@@ -168,4 +191,25 @@ button:hover {
 
 .draggable:active {
   cursor: grabbing;
+}
+
+.stat-wrapper{
+  float: right;
+  margin: 10px auto;
+  width: 70%;
+}
+
+.statname{
+  width: 200px;
+}
+
+.stat-value{
+  width: 30px;
+  text-align: center;
+}
+
+.statbtn{
+  width: 20px;
+  text-align: center;
+  padding: 0px;
 }
