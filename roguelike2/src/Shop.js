@@ -1,10 +1,9 @@
 const Shop = () => {
-    return(
+    return (
         <div className="shop">
-           <h2>This is the shop area</h2>
+            <h2>This is the shop area</h2>
         </div>
     );
-  }
-  
-  export default Shop;
-  
+};
+
+export default Shop;

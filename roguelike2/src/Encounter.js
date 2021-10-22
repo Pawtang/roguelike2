@@ -1,10 +1,9 @@
 const Encounter = () => {
-    return(
+    return (
         <div className="encounter">
-           <h2>This is the encounter area</h2>
+            <h2>This is the encounter area</h2>
         </div>
     );
-  }
-  
-  export default Encounter;
-  
+};
+
+export default Encounter;
