@@ -222,3 +222,19 @@ button:hover {
   text-align: center;
   padding: 0px;
 }
+
+input{
+  background-color: #444;
+  border-style:groove;
+  margin: auto;
+}
+
+input:hover{
+  background-color: #555;
+}
+
+::placeholder{
+  opacity: 1;
+  color: rgb(170, 170, 170);
+  font-size: 0.8em;
+}
