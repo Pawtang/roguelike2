@@ -37,8 +37,8 @@ const PlayerCreation = (props) => {
   return (
     <div className="flexcolumn center">
       <div className="creation flexrow">
-      <div className="player-image">
-        <h1>playername</h1>
+      <div className="player-image flexrow">
+        <input type="text" name="name" id="name" placeholder="enter character name"/>
       </div>
         <div className="stat-wrapper">
           <div className="flexcolumn center">
