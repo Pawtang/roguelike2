@@ -26,11 +26,15 @@ const Inventory = () => {
     <div className="inventory">
       <div className="inventorycontainer flexrow">
         <div className="equipped">
-          <div className="equippeditem placeholder"></div>
+          <div className="equippeditem ring1">
+            Ring
+          </div>
           <div className="equippeditem helmet" id="">
             Helmet<div class="sprite eq" id="helmet" draggable="true"></div>
           </div>
-          <div className="equippeditem placeholder"></div>
+          <div className="equippeditem ring2">
+            Ring
+          </div>
           <div className="equippeditem mainhand" id="">
             Main Hand
             <div class="sprite eq" id="woodensword1" draggable="true"></div>
