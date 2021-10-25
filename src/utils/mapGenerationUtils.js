@@ -70,7 +70,7 @@ const drawOpenSpace = (nodes, i, j) => {
 };
 
 export const roomProcessing = (room, roomSize) => {
-    console.log('room before', room);
+    // console.log('room before', room);
     for (let verticalIndex = 0; verticalIndex < roomSize; verticalIndex++) {
         for (let horizontalIndex = 0; horizontalIndex < roomSize; horizontalIndex++) {
             let tile = room[verticalIndex][horizontalIndex];
@@ -84,14 +84,22 @@ export const roomProcessing = (room, roomSize) => {
                     tile.tileType = 'open';
                     // console.log('executed if statement');
                     // console.log('after:', verticalIndex, horizontalIndex, north, south, east, west, tile.tileType);
-                } else if (south === 'wall' && north === 'wall' && west === 'wall' && east === 'wall') {
-                    tile.tileType = 'wall'; // This doesn't execute because we're only looking at wall tiles in the parent if statement.
-                    //But we should make a loop where we count neighbors, and if an open space has 3 (or 4?) wall neighbors, it also becomes a wall.
                 }
+            } else if (tile.tileType === 'open' && tile.boundaryType === 'none') {
+                const south = room[verticalIndex - 1][horizontalIndex].tileType;
+                const north = room[verticalIndex + 1][horizontalIndex].tileType;
+                const west = room[verticalIndex][horizontalIndex - 1].tileType;
+                const east = room[verticalIndex][horizontalIndex + 1].tileType;
+                const neighbors = [north, south, east, west];
+                let wallcount = 0;
+                neighbors.map((e) => {
+                    if (e === 'wall') wallcount++;
+                });
+                if (wallcount >= 3) tile.tileType = 'wall';
             }
         }
     }
-    console.log('room after', room);
+    // console.log('room after', room);
     return room;
 };
 

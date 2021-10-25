@@ -160,12 +160,27 @@ button:hover {
     height: 3px;
 } */
 
-.wall {
+/* .wall {
     background-color: #444;
 }
 
 .open {
     background-color: white;
+} */
+
+.floor1 {
+    background-color: rgb(148, 201, 173);
+}
+
+.floor2 {
+    background-color: rgb(187, 230, 208);
+}
+
+.wall1 {
+    background-color: rgb(51, 51, 51);
+}
+.wall2 {
+    background-color: rgb(32, 32, 32);
 }
 
 .equippeditem,

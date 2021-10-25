@@ -2,6 +2,7 @@ import Inventory from './Inventory';
 import React, { useState } from 'react';
 import { roomGenerator, roomProcessing } from './utils/mapGenerationUtils';
 import { NODE_COUNT, TILE_COUNT } from './utils/constants';
+import { assignTileTexture } from './utils/rngUtils';
 
 const Exploration = (props) => {
     const { currentRoomNumber, rooms, setRooms } = props;
@@ -28,7 +29,7 @@ const Exploration = (props) => {
                                         width: `${tileWidth}px`,
                                         height: `${tileWidth}px`,
                                     }}
-                                    className={`maptile ${tile.tileType}`}
+                                    className={`maptile ${assignTileTexture(tile.tileType)}`}
                                 />
                             ))
                         )}
