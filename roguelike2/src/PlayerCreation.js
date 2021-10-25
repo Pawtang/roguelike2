@@ -2,15 +2,8 @@ const PlayerCreation = (props) => {
     //const stats = [5,3,3,5,5] // Note -> we will likely be attaching these as
     //key value pairs, having them in order like this is fine for now buy
     // may lead to future issues. We'll leave it this way for now
-    const statCheck = () => {
-        let statTotal = 0;
-        for (let i = 0; i < stats.length; i++) {
-            statTotal += stats[i];
-        }
-        return statTotal;
-    };
 
-    const { setGameState, stats, setStats } = props; //Object destructuring -
+    const { setGamestate, stats, setStats } = props; //Object destructuring -
     //has same name
 
     const updateStats = (statIndex, direction, stats, setStats) => {
@@ -35,11 +28,8 @@ const PlayerCreation = (props) => {
     //need them elsewhere, we make sure there are non dependencies
     // on the current file's variables by doing this.
 
-    const statCheck2 = () => {
-        return stats.reduce(
-            (totalValue, currentStat) => totalValue + currentStat.value,
-            0
-        );
+    const statCheck = () => {
+        return stats.reduce((totalValue, currentStat) => totalValue + currentStat.value, 0);
         // Arrays.reduce allows you to iterate through the array and sum
         //together the values. Basically
         // it accumulates on the first parameter totalValue and adds each stat's
@@ -48,6 +38,7 @@ const PlayerCreation = (props) => {
     };
 
     const narritives = {
+        default: "You are average, you are nobody, you're a jack of all trades.",
         str: 'You were raised on beef and lard, pulling the plow on the farm in place of cattle. You never made it to school, you had fields to attend to. Your skin is leather-thick and sun cracked like rhinoceros hide.',
         strdex: 'After years of being tortured by your peers, you began attending the inner-city boxing gym as a teenager. You learned to duck and dodge, but also hit the weights after practice, and ate plenty of oats.',
         strint: '',
@@ -65,23 +56,32 @@ const PlayerCreation = (props) => {
         lck: "You've somehow always managed to fail upwards in life. You're not particularily good at anything, but always seem to be in the right place at the right time.",
     };
 
+    const getNarritive = (stats) => {
+        switch (true) {
+            case stats[0].value > 15:
+                return narritives.str;
+            case stats[0].value > 10 && stats[1].value > 10:
+                return narritives.str;
+            default:
+                return narritives.default;
+        }
+    };
+
     return (
         <div className="flexcolumn center">
             <div className="creation flexrow">
-                <div className="player-image flexrow">
-                    <input
-                        type="text"
-                        name="name"
-                        id="name"
-                        placeholder="enter character name"
-                    />
+                <div className="player-image flexcolumn">
+                    <div className="flexrow">
+                        <input type="text" name="name" id="name" placeholder="enter character name" />
+                    </div>
+                    <div className="narritive">
+                        <p className="narritive">{getNarritive(stats)}</p>
+                    </div>
                 </div>
                 <div className="stat-wrapper">
                     <div className="flexcolumn center">
                         <div className="stat flexrow">
-                            <p className="statname">
-                                Available Points: {25 - statCheck2()}
-                            </p>
+                            <p className="statname">Available Points: {25 - statCheck()}</p>
                             <div className="state-value" id="available">
                                 {}
                             </div>
@@ -93,36 +93,19 @@ const PlayerCreation = (props) => {
                                         <p class="statname">{stat.name}</p>
                                         <button
                                             class="statbtn"
-                                            onClick={() =>
-                                                updateStats(
-                                                    idx,
-                                                    'dec',
-                                                    stats,
-                                                    setStats
-                                                )
-                                            }
+                                            onClick={() => updateStats(idx, 'dec', stats, setStats)}
                                             disabled={stats[idx].value === 0}
                                         >
                                             -
                                         </button>{' '}
                                         {/*attempt here to disabled the button functionality when its value is 0*/}
-                                        <div
-                                            className="stat-value"
-                                            id={stat.id}
-                                        >
+                                        <div className="stat-value" id={stat.id}>
                                             {stat.value}
                                         </div>
                                         <button
                                             class="statbtn"
-                                            onClick={() =>
-                                                updateStats(
-                                                    idx,
-                                                    'inc',
-                                                    stats,
-                                                    setStats
-                                                )
-                                            }
-                                            disabled={statCheck2() >= 25}
+                                            onClick={() => updateStats(idx, 'inc', stats, setStats)}
+                                            disabled={statCheck() >= 25}
                                         >
                                             +
                                         </button>{' '}
@@ -135,10 +118,7 @@ const PlayerCreation = (props) => {
                 </div>
             </div>
             <div className="accept">
-                <button
-                    onClick={() => setGameState('exploration')}
-                    class="accept"
-                >
+                <button onClick={() => setGamestate('exploration')} class="accept">
                     Accept
                 </button>
             </div>

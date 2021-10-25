@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './css/index.css';
 import './css/sprites.css';
-import GameArea from './GameArea';
+import App from './App';
 
 ReactDOM.render(
     <React.StrictMode>
-        <GameArea />
+        <App />
     </React.StrictMode>,
     document.getElementById('root')
 );

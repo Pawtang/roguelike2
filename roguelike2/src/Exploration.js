@@ -1,26 +1,43 @@
 import Inventory from './Inventory';
 import React, { useState } from 'react';
+import { roomGenerator, roomProcessing } from './utils/mapGenerationUtils';
+import { TILE_COUNT } from './utils/constants';
 
-const Exploration = () => {
+const Exploration = (props) => {
+    const { currentRoomNumber, rooms, setRooms } = props;
+    const currentRoom = rooms[currentRoomNumber];
     const [inventorystate, setInventoryState] = useState('invclosed');
+    const tileWidth = 600 / TILE_COUNT;
     //This array should be generated...
-
     return (
         <div className="exploration">
-            <h2>This is the exploration area</h2>
-            <div className="mapgrid">
-                <div className="maptile"></div>
+            <div className="flexcolumn center">
+                <div
+                    style={{
+                        display: 'grid',
+                        gridTemplateColumns: `repeat(${TILE_COUNT}, ${tileWidth}px)`,
+                        gridTemplateRows: `repeat(${TILE_COUNT}, ${tileWidth}px)`,
+                        gap: '0',
+                    }}
+                >
+                    {currentRoom &&
+                        currentRoom.map((row) =>
+                            row.map((tile) => (
+                                <div
+                                    style={{
+                                        width: `${tileWidth}px`,
+                                        height: `${tileWidth}px`,
+                                    }}
+                                    className={`maptile ${tile.tileType}`}
+                                />
+                            ))
+                        )}
+                </div>
             </div>
-            {inventorystate === 'invopen' && (
-                <button onClick={() => setInventoryState('invclosed')}>
-                    Inventory
-                </button>
-            )}
-            {inventorystate === 'invclosed' && (
-                <button onClick={() => setInventoryState('invopen')}>
-                    Inventory
-                </button>
-            )}
+            {inventorystate === 'invopen' && <button onClick={() => setInventoryState('invclosed')}>Inventory</button>}
+            {inventorystate === 'invclosed' && <button onClick={() => setInventoryState('invopen')}>Inventory</button>}
+            <button onClick={() => setRooms([roomGenerator(20)])}>Re-Draw</button>
+            <button onClick={() => setRooms([roomProcessing(currentRoom, TILE_COUNT)])}>Process</button>
             {inventorystate === 'invopen' && <Inventory />}
         </div>
     );
