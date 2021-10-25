@@ -1,13 +1,17 @@
-import { TILE_COUNT } from './constants';
+import { DENSITY, MAX_RADIUS, TILE_COUNT } from './constants';
 import { betweenGenerator, intGenerator } from './rngUtils';
 
 export const roomGenerator = (nodeNumber) => {
     const room = [];
-    const roomSize = 100;
+    const roomSize = TILE_COUNT;
     const initialNodes = [];
 
     for (let n = 0; n < nodeNumber; n++) {
-        initialNodes.push([intGenerator(TILE_COUNT - 1), intGenerator(TILE_COUNT - 1), betweenGenerator(2, 5)]);
+        initialNodes.push([
+            intGenerator(TILE_COUNT - 1),
+            intGenerator(TILE_COUNT - 1),
+            betweenGenerator(2, MAX_RADIUS),
+        ]);
     }
 
     for (let verticalIndex = 0; verticalIndex < roomSize; verticalIndex++) {
@@ -15,7 +19,7 @@ export const roomGenerator = (nodeNumber) => {
         for (let horizontalIndex = 0; horizontalIndex < roomSize; horizontalIndex++) {
             let tileType = drawOpenSpace(initialNodes, verticalIndex, horizontalIndex);
             if (tileType === 'wall') {
-                tileType = Math.random() < 0.5 ? 'wall' : 'open';
+                tileType = Math.random() < DENSITY ? 'wall' : 'open';
             }
             row.push({
                 boundaryType: assignBoundaryType(roomSize - 1, verticalIndex, horizontalIndex),
@@ -75,8 +79,14 @@ export const roomProcessing = (room, roomSize) => {
                 const north = room[verticalIndex + 1][horizontalIndex].tileType;
                 const west = room[verticalIndex][horizontalIndex - 1].tileType;
                 const east = room[verticalIndex][horizontalIndex + 1].tileType;
-                if ((south === 'open' && north === 'open' && west === 'open', east === 'open')) {
+                if (south === 'open' && north === 'open' && west === 'open' && east === 'open') {
+                    // console.log('before', verticalIndex, horizontalIndex, north, south, east, west, tile.tileType);
                     tile.tileType = 'open';
+                    // console.log('executed if statement');
+                    // console.log('after:', verticalIndex, horizontalIndex, north, south, east, west, tile.tileType);
+                } else if (south === 'wall' && north === 'wall' && west === 'wall' && east === 'wall') {
+                    tile.tileType = 'wall'; // This doesn't execute because we're only looking at wall tiles in the parent if statement.
+                    //But we should make a loop where we count neighbors, and if an open space has 3 (or 4?) wall neighbors, it also becomes a wall.
                 }
             }
         }

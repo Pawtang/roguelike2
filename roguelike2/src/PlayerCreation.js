@@ -1,16 +1,7 @@
 const PlayerCreation = (props) => {
-    //const stats = [5,3,3,5,5] // Note -> we will likely be attaching these as
-    //key value pairs, having them in order like this is fine for now buy
-    // may lead to future issues. We'll leave it this way for now
-
-    const { setGamestate, stats, setStats } = props; //Object destructuring -
-    //has same name
-
+    const { setGamestate, stats, setStats } = props;
     const updateStats = (statIndex, direction, stats, setStats) => {
-        const statsCopy = [...stats]; //Create a copy so we don't attempt to
-        //modify the original value. May not be necessary but this is a thing
-        //due to how variables reference
-        // data stored in memory. I can get into this in a call.
+        const statsCopy = [...stats];
         console.log('click', `${statIndex}, ${direction}`);
         if (direction === 'dec') {
             statsCopy[statIndex].value = statsCopy[statIndex].value - 1;
@@ -20,21 +11,8 @@ const PlayerCreation = (props) => {
         setStats(statsCopy); // Set stats in higher level state;
     };
 
-    // ^ the above function can also be made into increaseStat and decreaseStat
-    //functions if you would like to separate them. not necessary however
-    // also note that every variable we touch inside our function is passed in.
-    //I'm not that familiar with functional components
-    // but if we want to move these incrementers to utilities because we might
-    //need them elsewhere, we make sure there are non dependencies
-    // on the current file's variables by doing this.
-
     const statCheck = () => {
         return stats.reduce((totalValue, currentStat) => totalValue + currentStat.value, 0);
-        // Arrays.reduce allows you to iterate through the array and sum
-        //together the values. Basically
-        // it accumulates on the first parameter totalValue and adds each stat's
-        //"value" field to it.
-        // Can be used to simplify statCheck above as well.
     };
 
     const narritives = {
@@ -63,19 +41,21 @@ const PlayerCreation = (props) => {
             case stats[0].value > 10 && stats[1].value > 10:
                 return narritives.str;
             default:
-                return narritives.default;
+                return narritives.str;
         }
     };
 
     return (
         <div className="flexcolumn center">
-            <div className="creation flexrow">
+            <div className="creation flexcolumn">
+                <h1>Create a new character...</h1>
+
                 <div className="player-image flexcolumn">
                     <div className="flexrow">
                         <input type="text" name="name" id="name" placeholder="enter character name" />
                     </div>
                     <div className="narritive">
-                        <p className="narritive">{getNarritive(stats)}</p>
+                        <p>{getNarritive(stats)}</p>
                     </div>
                 </div>
                 <div className="stat-wrapper">
@@ -117,9 +97,10 @@ const PlayerCreation = (props) => {
                     </div>
                 </div>
             </div>
-            <div className="accept">
-                <button onClick={() => setGamestate('exploration')} class="accept">
-                    Accept
+            <div className="">
+                <button className="inline-btn">Reset ⭕</button>
+                <button onClick={() => setGamestate('exploration')} class="inline-btn">
+                    Accept ✅
                 </button>
             </div>
         </div>

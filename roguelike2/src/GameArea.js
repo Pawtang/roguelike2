@@ -7,13 +7,13 @@ import PlayerCreation from './PlayerCreation';
 import Shop from './Shop';
 import Exploration from './Exploration';
 import { roomGenerator } from './utils/mapGenerationUtils';
-import { INITIAL_STATS } from './utils/constants';
+import { INITIAL_STATS, NODE_COUNT } from './utils/constants';
 
 const GameArea = (props) => {
     // Curly braces = javascript
     const { gamestate, setGamestate } = props;
     const [stats, setStats] = useState(INITIAL_STATS);
-    const [rooms, setRooms] = useState([roomGenerator(20)]);
+    const [rooms, setRooms] = useState([roomGenerator(NODE_COUNT)]);
     const [currentRoomNumber, setCurrentRoomNumber] = useState(0);
     const [playerPosition, setPlayerPosition] = useState();
 

@@ -1,7 +1,7 @@
 import Inventory from './Inventory';
 import React, { useState } from 'react';
 import { roomGenerator, roomProcessing } from './utils/mapGenerationUtils';
-import { TILE_COUNT } from './utils/constants';
+import { NODE_COUNT, TILE_COUNT } from './utils/constants';
 
 const Exploration = (props) => {
     const { currentRoomNumber, rooms, setRooms } = props;
@@ -36,7 +36,7 @@ const Exploration = (props) => {
             </div>
             {inventorystate === 'invopen' && <button onClick={() => setInventoryState('invclosed')}>Inventory</button>}
             {inventorystate === 'invclosed' && <button onClick={() => setInventoryState('invopen')}>Inventory</button>}
-            <button onClick={() => setRooms([roomGenerator(20)])}>Re-Draw</button>
+            <button onClick={() => setRooms([roomGenerator(NODE_COUNT)])}>Re-Draw</button>
             <button onClick={() => setRooms([roomProcessing(currentRoom, TILE_COUNT)])}>Process</button>
             {inventorystate === 'invopen' && <Inventory />}
         </div>
