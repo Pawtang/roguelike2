@@ -97,6 +97,19 @@ export const roomProcessing = (room, roomSize) => {
                 });
                 if (wallcount >= 3) tile.tileType = 'wall';
             }
+            if (
+                tile.tileType === 'wall' &&
+                tile.boundaryType === 'none' &&
+                room[verticalIndex + 1][horizontalIndex].tileType === 'open'
+            )
+                tile.tileType = 'foot';
+            //TODO: This breaks the processing step because it changes tileType to head! The fucntional tag and style tag should be different elements
+            // if (
+            //     tile.tileType === 'open' &&
+            //     tile.boundaryType === 'none' &&
+            //     room[verticalIndex + 1][horizontalIndex].tileType === 'wall'
+            // )
+            //     tile.tileType = 'head';
         }
     }
     // console.log('room after', room);

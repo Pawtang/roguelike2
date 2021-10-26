@@ -177,10 +177,34 @@ button:hover {
 }
 
 .wall1 {
-    background-color: rgb(51, 51, 51);
+    background-color: rgb(82, 82, 82);
 }
-.wall2 {
+/* .wall2 {
+    background-image: url('../assets/stone.jpg');
+    background-size: cover;
     background-color: rgb(32, 32, 32);
+} */
+
+.foot {
+    background: rgb(187, 230, 208);
+    background: linear-gradient(
+        0deg,
+        rgba(187, 230, 208, 1) 6%,
+        rgba(28, 28, 28, 1) 11%,
+        rgba(88, 88, 88, 1) 94%,
+        rgba(217, 217, 217, 1) 97%
+    );
+}
+
+.head {
+    background: rgb(88, 88, 88);
+    background: linear-gradient(
+        0deg,
+        rgba(88, 88, 88, 1) 26%,
+        rgba(30, 30, 30, 1) 27%,
+        rgba(52, 52, 52, 1) 31%,
+        rgba(187, 230, 208, 1) 40%
+    );
 }
 
 .equippeditem,
@@ -281,7 +305,8 @@ input:hover {
 .narritive p {
     font-size: 0.8em;
 }
-.openCenter {
+
+.undefined {
     background-color: red;
 }
 

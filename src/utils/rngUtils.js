@@ -5,6 +5,11 @@ export const assignTileTexture = (tileType) => {
     if (tileType === 'open') {
         return `floor${betweenGeneratorInteger(1, 3)}`;
     } else if (tileType === 'wall') {
-        return `wall${betweenGeneratorInteger(1, 3)}`;
+        return 'wall1';
+        // return `wall${betweenGeneratorInteger(1, 3)}`;
+    } else if (tileType === 'foot') {
+        return 'foot wall';
+    } else if (tileType === 'head') {
+        return 'head wall';
     }
 };
