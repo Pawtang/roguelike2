@@ -29,7 +29,7 @@ const Exploration = (props) => {
                                         width: `${tileWidth}px`,
                                         height: `${tileWidth}px`,
                                     }}
-                                    className={`maptile ${assignTileTexture(tile.tileType)}`}
+                                    className={`maptile ${assignTileTexture(tile.tileStyle)}`}
                                 />
                             ))
                         )}

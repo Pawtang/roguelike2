@@ -24,6 +24,7 @@ export const roomGenerator = (nodeNumber) => {
             row.push({
                 boundaryType: assignBoundaryType(roomSize - 1, verticalIndex, horizontalIndex),
                 tileType,
+                tileStyle: '',
                 hasBeenTraveled: false,
                 tileNumber: verticalIndex * roomSize + horizontalIndex,
             });
@@ -80,10 +81,7 @@ export const roomProcessing = (room, roomSize) => {
                 const west = room[verticalIndex][horizontalIndex - 1].tileType;
                 const east = room[verticalIndex][horizontalIndex + 1].tileType;
                 if (south === 'open' && north === 'open' && west === 'open' && east === 'open') {
-                    // console.log('before', verticalIndex, horizontalIndex, north, south, east, west, tile.tileType);
                     tile.tileType = 'open';
-                    // console.log('executed if statement');
-                    // console.log('after:', verticalIndex, horizontalIndex, north, south, east, west, tile.tileType);
                 }
             } else if (tile.tileType === 'open' && tile.boundaryType === 'none') {
                 const south = room[verticalIndex - 1][horizontalIndex].tileType;
@@ -96,20 +94,16 @@ export const roomProcessing = (room, roomSize) => {
                     if (e === 'wall') wallcount++;
                 });
                 if (wallcount >= 3) tile.tileType = 'wall';
-            }
-            if (
-                tile.tileType === 'wall' &&
-                tile.boundaryType === 'none' &&
-                room[verticalIndex + 1][horizontalIndex].tileType === 'open'
-            )
-                tile.tileType = 'foot';
-            //TODO: This breaks the processing step because it changes tileType to head! The fucntional tag and style tag should be different elements
-            // if (
-            //     tile.tileType === 'open' &&
-            //     tile.boundaryType === 'none' &&
-            //     room[verticalIndex + 1][horizontalIndex].tileType === 'wall'
-            // )
-            //     tile.tileType = 'head';
+            } // not quite working below:
+            if (tile.tileType === 'wall' && tile.boundaryType === 'none') {
+                if (room[verticalIndex + 1][horizontalIndex].tileType === 'open') {
+                    console.log('foot');
+                    tile.tileStyle = 'foot';
+                }
+            } else tile.tileStyle = 'wall';
+            if (tile.tileType === 'open' && tile.boundaryType === 'none') {
+                if (room[verticalIndex + 1][horizontalIndex].tileType === 'wall') tile.tileStyle = 'head';
+            } else tile.tileStyle = 'open';
         }
     }
     // console.log('room after', room);
