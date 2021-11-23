@@ -21,9 +21,12 @@ export const roomGenerator = (nodeNumber) => {
             if (tileType === 'wall') {
                 tileType = Math.random() < DENSITY ? 'wall' : 'open';
             }
+            let tileStyle = ''; //Initialize tileStyle
+            tileStyle = tileType === 'wall' ? 'wall' : 'open';
             row.push({
                 boundaryType: assignBoundaryType(roomSize - 1, verticalIndex, horizontalIndex),
                 tileType,
+                tileStyle,
                 hasBeenTraveled: false,
                 tileNumber: verticalIndex * roomSize + horizontalIndex,
             });
@@ -82,6 +85,7 @@ export const roomProcessing = (room, roomSize) => {
                 if (south === 'open' && north === 'open' && west === 'open' && east === 'open') {
                     // console.log('before', verticalIndex, horizontalIndex, north, south, east, west, tile.tileType);
                     tile.tileType = 'open';
+                    tile.tileStyle = 'open';
                     // console.log('executed if statement');
                     // console.log('after:', verticalIndex, horizontalIndex, north, south, east, west, tile.tileType);
                 }
@@ -102,17 +106,25 @@ export const roomProcessing = (room, roomSize) => {
                 tile.boundaryType === 'none' &&
                 room[verticalIndex + 1][horizontalIndex].tileType === 'open'
             )
-                tile.tileType = 'foot';
-            //TODO: This breaks the processing step because it changes tileType to head! The fucntional tag and style tag should be different elements
-            // if (
-            //     tile.tileType === 'open' &&
-            //     tile.boundaryType === 'none' &&
-            //     room[verticalIndex + 1][horizontalIndex].tileType === 'wall'
-            // )
-            //     tile.tileType = 'head';
+                tile.tileStyle = 'foot';
+            // TODO: This breaks the processing step because it changes tileType to head! The fucntional tag and style tag should be different elements
+            if (
+                tile.tileType === 'open' &&
+                tile.boundaryType === 'none' &&
+                room[verticalIndex + 1][horizontalIndex].tileType === 'wall'
+            )
+                tile.tileStyle = 'head';
         }
     }
     // console.log('room after', room);
+    AssignStyles(room);
+};
+
+export const AssignStyles = (room) => {
+    //This is where I want to put all of the style assignment functions
+    //Have to extract them from RoomProcessing, which should only change opens to walls and vice versa as needed
+    //Idea being that "wall" vs "open" is a functional difference (movement) whereas tileStyle is just visual
+    //By the way - styles are assigned CSS classes in the rngUtils.js file, under AssignTileTextures, which is called here.
     return room;
 };
 

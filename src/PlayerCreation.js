@@ -41,7 +41,7 @@ const PlayerCreation = (props) => {
             case stats[0].value > 10 && stats[1].value > 10:
                 return narritives.str;
             default:
-                return narritives.str;
+                return narritives.chr;
         }
     };
 
