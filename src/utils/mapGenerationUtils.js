@@ -85,7 +85,6 @@ export const roomProcessing = (room, roomSize) => {
                 if (south === 'open' && north === 'open' && west === 'open' && east === 'open') {
                     // console.log('before', verticalIndex, horizontalIndex, north, south, east, west, tile.tileType);
                     tile.tileType = 'open';
-                    tile.tileStyle = 'open';
                     // console.log('executed if statement');
                     // console.log('after:', verticalIndex, horizontalIndex, north, south, east, west, tile.tileType);
                 }
@@ -101,30 +100,49 @@ export const roomProcessing = (room, roomSize) => {
                 });
                 if (wallcount >= 3) tile.tileType = 'wall';
             }
-            if (
-                tile.tileType === 'wall' &&
-                tile.boundaryType === 'none' &&
-                room[verticalIndex + 1][horizontalIndex].tileType === 'open'
-            )
-                tile.tileStyle = 'foot';
-            // TODO: This breaks the processing step because it changes tileType to head! The fucntional tag and style tag should be different elements
-            if (
-                tile.tileType === 'open' &&
-                tile.boundaryType === 'none' &&
-                room[verticalIndex + 1][horizontalIndex].tileType === 'wall'
-            )
-                tile.tileStyle = 'head';
         }
     }
     // console.log('room after', room);
-    AssignStyles(room);
+    for (let verticalIndex = 0; verticalIndex < roomSize; verticalIndex++) {
+        for (let horizontalIndex = 0; horizontalIndex < roomSize; horizontalIndex++) {
+            let tile = room[verticalIndex][horizontalIndex];
+            if (tile.tileType === 'wall') {
+                if (tile.boundaryType === 'none' && room[verticalIndex + 1][horizontalIndex].tileType === 'open') {
+                    tile.tileStyle = 'foot';
+                } else tile.tileStyle = 'wall';
+            }
+            // TODO: This breaks the processing step because it changes tileType to head! The fucntional tag and style tag should be different elements
+            if (tile.tileType === 'open') {
+                if (tile.boundaryType === 'none' && room[verticalIndex + 1][horizontalIndex].tileType === 'wall')
+                    tile.tileStyle = 'head';
+                else tile.tileStyle = 'open';
+            }
+        }
+    }
+    return room;
 };
 
-export const AssignStyles = (room) => {
+export const AssignStyles = (room, roomSize) => {
     //This is where I want to put all of the style assignment functions
     //Have to extract them from RoomProcessing, which should only change opens to walls and vice versa as needed
     //Idea being that "wall" vs "open" is a functional difference (movement) whereas tileStyle is just visual
     //By the way - styles are assigned CSS classes in the rngUtils.js file, under AssignTileTextures, which is called here.
+    for (let verticalIndex = 0; verticalIndex < roomSize; verticalIndex++) {
+        for (let horizontalIndex = 0; horizontalIndex < roomSize; horizontalIndex++) {
+            let tile = room[verticalIndex][horizontalIndex];
+            if (tile.tileType === 'wall') {
+                if (tile.boundaryType === 'none' && room[verticalIndex + 1][horizontalIndex].tileType === 'open') {
+                    tile.tileStyle = 'foot';
+                } else tile.tileStyle = 'wall';
+            }
+            // TODO: This breaks the processing step because it changes tileType to head! The fucntional tag and style tag should be different elements
+            if (tile.tileType === 'open') {
+                if (tile.boundaryType === 'none' && room[verticalIndex + 1][horizontalIndex].tileType === 'wall')
+                    tile.tileStyle = 'head';
+                else tile.tileStyle = 'open';
+            }
+        }
+    }
     return room;
 };
 
