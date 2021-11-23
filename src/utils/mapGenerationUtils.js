@@ -74,51 +74,89 @@ const drawOpenSpace = (nodes, i, j) => {
 
 export const roomProcessing = (room, roomSize) => {
     // console.log('room before', room);
-    for (let verticalIndex = 0; verticalIndex < roomSize; verticalIndex++) {
+    // for (let verticalIndex = 0; verticalIndex < roomSize; verticalIndex++) {
+    //     for (let horizontalIndex = 0; horizontalIndex < roomSize; horizontalIndex++) {
+    //         let tile = room[verticalIndex][horizontalIndex];
+    //         if (tile.tileType === 'wall' && tile.boundaryType === 'none') {
+    //             const south = room[verticalIndex - 1][horizontalIndex].tileType;
+    //             const north = room[verticalIndex + 1][horizontalIndex].tileType;
+    //             const west = room[verticalIndex][horizontalIndex - 1].tileType;
+    //             const east = room[verticalIndex][horizontalIndex + 1].tileType;
+    //             if (south === 'open' && north === 'open' && west === 'open' && east === 'open') {
+    //                 // console.log('before', verticalIndex, horizontalIndex, north, south, east, west, tile.tileType);
+    //                 tile.tileType = 'open';
+    //                 // console.log('executed if statement');
+    //                 // console.log('after:', verticalIndex, horizontalIndex, north, south, east, west, tile.tileType);
+    //             }
+    //         } else if (tile.tileType === 'open' && tile.boundaryType === 'none') {
+    //             const south = room[verticalIndex - 1][horizontalIndex].tileType;
+    //             const north = room[verticalIndex + 1][horizontalIndex].tileType;
+    //             const west = room[verticalIndex][horizontalIndex - 1].tileType;
+    //             const east = room[verticalIndex][horizontalIndex + 1].tileType;
+    //             const neighbors = [north, south, east, west];
+    //             let wallcount = 0;
+    //             neighbors.map((e) => {
+    //                 if (e === 'wall') wallcount++;
+    //             });
+    //             if (wallcount >= 3) tile.tileType = 'wall';
+    //         }
+    //     }
+    // }
+    for (let verticalIndex = roomSize - 1; verticalIndex >= 0; verticalIndex--) {
         for (let horizontalIndex = 0; horizontalIndex < roomSize; horizontalIndex++) {
             let tile = room[verticalIndex][horizontalIndex];
-            if (tile.tileType === 'wall' && tile.boundaryType === 'none') {
-                const south = room[verticalIndex - 1][horizontalIndex].tileType;
-                const north = room[verticalIndex + 1][horizontalIndex].tileType;
-                const west = room[verticalIndex][horizontalIndex - 1].tileType;
-                const east = room[verticalIndex][horizontalIndex + 1].tileType;
-                if (south === 'open' && north === 'open' && west === 'open' && east === 'open') {
-                    // console.log('before', verticalIndex, horizontalIndex, north, south, east, west, tile.tileType);
-                    tile.tileType = 'open';
-                    // console.log('executed if statement');
-                    // console.log('after:', verticalIndex, horizontalIndex, north, south, east, west, tile.tileType);
+            if (tile.tileType === 'wall') {
+                if (tile.boundaryType === 'none') {
+                    const south = room[verticalIndex - 1][horizontalIndex].tileType;
+                    const north = room[verticalIndex + 1][horizontalIndex].tileType;
+                    const west = room[verticalIndex][horizontalIndex - 1].tileType;
+                    const east = room[verticalIndex][horizontalIndex + 1].tileType;
+                    tile.tileStyle = north === 'open' ? 'foot' : 'wall';
+                    if (south === 'open' && north === 'open' && west === 'open' && east === 'open') {
+                        // console.log('before', verticalIndex, horizontalIndex, north, south, east, west, tile.tileType);
+                        tile.tileType = 'open';
+                        // console.log('executed if statement');
+                        // console.log('after:', verticalIndex, horizontalIndex, north, south, east, west, tile.tileType);
+                    }
+                } else {
+                    tile.tileType = 'wall';
                 }
-            } else if (tile.tileType === 'open' && tile.boundaryType === 'none') {
-                const south = room[verticalIndex - 1][horizontalIndex].tileType;
-                const north = room[verticalIndex + 1][horizontalIndex].tileType;
-                const west = room[verticalIndex][horizontalIndex - 1].tileType;
-                const east = room[verticalIndex][horizontalIndex + 1].tileType;
-                const neighbors = [north, south, east, west];
-                let wallcount = 0;
-                neighbors.map((e) => {
-                    if (e === 'wall') wallcount++;
-                });
-                if (wallcount >= 3) tile.tileType = 'wall';
+            } else if (tile.tileType === 'open') {
+                if (tile.boundaryType === 'none') {
+                    const south = room[verticalIndex - 1][horizontalIndex].tileType;
+                    const north = room[verticalIndex + 1][horizontalIndex].tileType;
+                    const west = room[verticalIndex][horizontalIndex - 1].tileType;
+                    const east = room[verticalIndex][horizontalIndex + 1].tileType;
+                    tile.tileStyle = north === 'wall' ? 'head' : 'open';
+                    const neighbors = [north, south, east, west];
+                    let wallcount = 0;
+                    neighbors.map((e) => {
+                        if (e === 'wall') wallcount++;
+                    });
+                    if (wallcount >= 3) tile.tileType = 'wall';
+                } else {
+                    tile.tileStyle = 'open';
+                }
             }
         }
     }
     // console.log('room after', room);
-    for (let verticalIndex = 0; verticalIndex < roomSize; verticalIndex++) {
-        for (let horizontalIndex = 0; horizontalIndex < roomSize; horizontalIndex++) {
-            let tile = room[verticalIndex][horizontalIndex];
-            if (tile.tileType === 'wall') {
-                if (tile.boundaryType === 'none' && room[verticalIndex + 1][horizontalIndex].tileType === 'open') {
-                    tile.tileStyle = 'foot';
-                } else tile.tileStyle = 'wall';
-            }
-            // TODO: This breaks the processing step because it changes tileType to head! The fucntional tag and style tag should be different elements
-            if (tile.tileType === 'open') {
-                if (tile.boundaryType == 'none' && room[verticalIndex + 1][horizontalIndex].tileType === 'wall')
-                    tile.tileStyle = 'head';
-                else tile.tileStyle = 'open';
-            }
-        }
-    }
+    // for (let verticalIndex = 0; verticalIndex < roomSize; verticalIndex++) {
+    //     for (let horizontalIndex = 0; horizontalIndex < roomSize; horizontalIndex++) {
+    //         let tile = room[verticalIndex][horizontalIndex];
+    //         if (tile.tileType === 'wall') {
+    //             if (tile.boundaryType === 'none' && room[verticalIndex + 1][horizontalIndex].tileType === 'open') {
+    //                 tile.tileStyle = 'foot';
+    //             } else tile.tileStyle = 'wall';
+    //         }
+    //         // TODO: This breaks the processing step because it changes tileType to head! The fucntional tag and style tag should be different elements
+    //         if (tile.tileType === 'open') {
+    //             if (tile.boundaryType == 'none' && room[verticalIndex + 1][horizontalIndex].tileType === 'wall')
+    //                 tile.tileStyle = 'head';
+    //             else tile.tileStyle = 'open';
+    //         }
+    //     }
+    // }
     return room;
 };
 
