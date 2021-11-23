@@ -73,7 +73,7 @@ const drawOpenSpace = (nodes, i, j) => {
 };
 
 export const roomProcessing = (room, roomSize) => {
-    // console.log('room before', room);
+    console.log('room before', [...room]);
     // for (let verticalIndex = 0; verticalIndex < roomSize; verticalIndex++) {
     //     for (let horizontalIndex = 0; horizontalIndex < roomSize; horizontalIndex++) {
     //         let tile = room[verticalIndex][horizontalIndex];
@@ -111,15 +111,17 @@ export const roomProcessing = (room, roomSize) => {
                     const north = room[verticalIndex + 1][horizontalIndex].tileType;
                     const west = room[verticalIndex][horizontalIndex - 1].tileType;
                     const east = room[verticalIndex][horizontalIndex + 1].tileType;
-                    tile.tileStyle = north === 'open' ? 'foot' : 'wall';
                     if (south === 'open' && north === 'open' && west === 'open' && east === 'open') {
                         // console.log('before', verticalIndex, horizontalIndex, north, south, east, west, tile.tileType);
                         tile.tileType = 'open';
                         // console.log('executed if statement');
                         // console.log('after:', verticalIndex, horizontalIndex, north, south, east, west, tile.tileType);
+                        tile.tileStyle = north === 'wall' ? 'head' : 'open';
+                    } else {
+                        tile.tileStyle = north === 'open' ? 'foot' : 'wall';
                     }
                 } else {
-                    tile.tileType = 'wall';
+                    tile.tileStyle = 'wall';
                 }
             } else if (tile.tileType === 'open') {
                 if (tile.boundaryType === 'none') {
@@ -133,7 +135,12 @@ export const roomProcessing = (room, roomSize) => {
                     neighbors.map((e) => {
                         if (e === 'wall') wallcount++;
                     });
-                    if (wallcount >= 3) tile.tileType = 'wall';
+                    if (wallcount >= 3) {
+                        tile.tileType = 'wall';
+                        tile.tileStyle = north === 'open' ? 'foot' : 'wall';
+                    } else {
+                        tile.tileStyle = north === 'wall' ? 'head' : 'open'
+                    }
                 } else {
                     tile.tileStyle = 'open';
                 }
