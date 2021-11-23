@@ -1,7 +1,4 @@
 export const INITIAL_STATS = [
-    // Like the item dictionary we hardcoded in the
-    //Inventory file, this will likely be moved somewhere in a constants file and will
-    //be imported as a reference everywhere
     {
         name: 'Strength 💪',
         id: 'str',
@@ -29,7 +26,7 @@ export const INITIAL_STATS = [
     },
 ];
 
-export const TILE_COUNT = 50;
+export const TILE_COUNT = 30;
 export const NODE_COUNT = TILE_COUNT / 5;
 export const DENSITY = 0.35;
 export const MAX_RADIUS = TILE_COUNT / 10;

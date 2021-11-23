@@ -67,6 +67,9 @@ button:hover {
     box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
 }
 
+#accept {
+}
+
 .menu {
     height: 100%;
     display: flex;
@@ -198,13 +201,7 @@ button:hover {
 
 .head {
     background: rgb(88, 88, 88);
-    background: linear-gradient(
-        0deg,
-        rgba(88, 88, 88, 1) 26%,
-        rgba(30, 30, 30, 1) 27%,
-        rgba(52, 52, 52, 1) 31%,
-        rgba(187, 230, 208, 1) 40%
-    );
+    background: linear-gradient(0deg, rgba(88, 88, 88, 1) 46%, rgba(100, 100, 100, 1) 51%, rgba(187, 230, 208, 1) 51%);
 }
 
 .equippeditem,

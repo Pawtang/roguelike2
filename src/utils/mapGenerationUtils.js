@@ -113,7 +113,7 @@ export const roomProcessing = (room, roomSize) => {
             }
             // TODO: This breaks the processing step because it changes tileType to head! The fucntional tag and style tag should be different elements
             if (tile.tileType === 'open') {
-                if (tile.boundaryType === 'none' && room[verticalIndex + 1][horizontalIndex].tileType === 'wall')
+                if (tile.boundaryType == 'none' && room[verticalIndex + 1][horizontalIndex].tileType === 'wall')
                     tile.tileStyle = 'head';
                 else tile.tileStyle = 'open';
             }
@@ -127,23 +127,6 @@ export const AssignStyles = (room, roomSize) => {
     //Have to extract them from RoomProcessing, which should only change opens to walls and vice versa as needed
     //Idea being that "wall" vs "open" is a functional difference (movement) whereas tileStyle is just visual
     //By the way - styles are assigned CSS classes in the rngUtils.js file, under AssignTileTextures, which is called here.
-    for (let verticalIndex = 0; verticalIndex < roomSize; verticalIndex++) {
-        for (let horizontalIndex = 0; horizontalIndex < roomSize; horizontalIndex++) {
-            let tile = room[verticalIndex][horizontalIndex];
-            if (tile.tileType === 'wall') {
-                if (tile.boundaryType === 'none' && room[verticalIndex + 1][horizontalIndex].tileType === 'open') {
-                    tile.tileStyle = 'foot';
-                } else tile.tileStyle = 'wall';
-            }
-            // TODO: This breaks the processing step because it changes tileType to head! The fucntional tag and style tag should be different elements
-            if (tile.tileType === 'open') {
-                if (tile.boundaryType === 'none' && room[verticalIndex + 1][horizontalIndex].tileType === 'wall')
-                    tile.tileStyle = 'head';
-                else tile.tileStyle = 'open';
-            }
-        }
-    }
-    return room;
 };
 
 // const drawPaths = (room, initialNodes) => {
