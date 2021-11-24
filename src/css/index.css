@@ -199,6 +199,28 @@ button:hover {
     );
 }
 
+.entrance {
+    background: rgb(187, 230, 208);
+    background: linear-gradient(
+        0deg,
+        rgb(55, 255, 55) 15%,
+        rgba(28, 28, 28, 1) 16%,
+        rgba(0, 0, 0, 1) 94%,
+        rgba(217, 217, 217, 1) 97%
+    );
+}
+
+.exit {
+    background: rgb(187, 230, 208);
+    background: linear-gradient(
+        0deg,
+        rgba(255, 55, 55, 1) 15%,
+        rgba(28, 28, 28, 1) 16%,
+        rgba(0, 0, 0, 1) 94%,
+        rgba(217, 217, 217, 1) 97%
+    );
+}
+
 .head {
     background: rgb(88, 88, 88);
     background: linear-gradient(0deg, rgba(88, 88, 88, 1) 46%, rgba(100, 100, 100, 1) 51%, rgba(187, 230, 208, 1) 51%);

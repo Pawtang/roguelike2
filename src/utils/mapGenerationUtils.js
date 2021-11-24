@@ -1,5 +1,5 @@
 import { DENSITY, MAX_RADIUS, TILE_COUNT } from './constants';
-import { betweenGenerator, intGenerator } from './rngUtils';
+import { betweenGenerator, intGenerator, betweenGeneratorInteger } from './rngUtils';
 
 export const roomGenerator = (nodeNumber) => {
     const room = [];
@@ -73,80 +73,74 @@ const drawOpenSpace = (nodes, i, j) => {
 };
 
 /* move this to util */
-const checkAllElementsInListEqualValue = (list, value) => list.reduce((prev, current) => prev && current === value, true);
+const checkAllElementsInListEqualValue = (list, value) =>
+    list.reduce((prev, current) => prev && current === value, true);
 
 const getNeighborTileTypes = (room, verticalIndex, horizontalIndex, tile) => {
     //NOTE - south is + 1 not - 1
     if (tile.boundaryType === 'none') {
-        return [room[verticalIndex - 1][horizontalIndex].tileType,
-                room[verticalIndex + 1][horizontalIndex].tileType,
-                room[verticalIndex][horizontalIndex - 1].tileType,
-                room[verticalIndex][horizontalIndex + 1].tileType];
+        return [
+            room[verticalIndex - 1][horizontalIndex].tileType,
+            room[verticalIndex + 1][horizontalIndex].tileType,
+            room[verticalIndex][horizontalIndex - 1].tileType,
+            room[verticalIndex][horizontalIndex + 1].tileType,
+        ];
     } else if (tile.boundaryType === 'nw-corner') {
-        return [room[verticalIndex][horizontalIndex + 1].tileType,
-                room[verticalIndex + 1][horizontalIndex].tileType];
+        return [room[verticalIndex][horizontalIndex + 1].tileType, room[verticalIndex + 1][horizontalIndex].tileType];
     } else if (tile.boundaryType === 'ne-corner') {
-        return [room[verticalIndex][horizontalIndex - 1].tileType,
-                room[verticalIndex + 1][horizontalIndex].tileType];
+        return [room[verticalIndex][horizontalIndex - 1].tileType, room[verticalIndex + 1][horizontalIndex].tileType];
     } else if (tile.boundaryType === 'sw-corner') {
-        return [room[verticalIndex][horizontalIndex + 1].tileType,
-                room[verticalIndex - 1][horizontalIndex].tileType];
+        return [room[verticalIndex][horizontalIndex + 1].tileType, room[verticalIndex - 1][horizontalIndex].tileType];
     } else if (tile.boundaryType === 'se-corner') {
-        return [room[verticalIndex][horizontalIndex - 1].tileType,
-                room[verticalIndex - 1][horizontalIndex].tileType];
+        return [room[verticalIndex][horizontalIndex - 1].tileType, room[verticalIndex - 1][horizontalIndex].tileType];
     } else if (tile.boundaryType === 'north-edge') {
-        return [room[verticalIndex + 1][horizontalIndex].tileType,
-                room[verticalIndex][horizontalIndex - 1].tileType,
-                room[verticalIndex][horizontalIndex + 1].tileType];
+        return [
+            room[verticalIndex + 1][horizontalIndex].tileType,
+            room[verticalIndex][horizontalIndex - 1].tileType,
+            room[verticalIndex][horizontalIndex + 1].tileType,
+        ];
     } else if (tile.boundaryType === 'south-edge') {
-        return [room[verticalIndex - 1][horizontalIndex].tileType,
-                room[verticalIndex][horizontalIndex - 1].tileType,
-                room[verticalIndex][horizontalIndex + 1].tileType];
+        return [
+            room[verticalIndex - 1][horizontalIndex].tileType,
+            room[verticalIndex][horizontalIndex - 1].tileType,
+            room[verticalIndex][horizontalIndex + 1].tileType,
+        ];
     } else if (tile.boundaryType === 'west-edge') {
-        return [room[verticalIndex - 1][horizontalIndex].tileType,
-                room[verticalIndex + 1][horizontalIndex].tileType,
-                room[verticalIndex][horizontalIndex + 1].tileType];
+        return [
+            room[verticalIndex - 1][horizontalIndex].tileType,
+            room[verticalIndex + 1][horizontalIndex].tileType,
+            room[verticalIndex][horizontalIndex + 1].tileType,
+        ];
     } else if (tile.boundaryType === 'east-edge') {
-        return [room[verticalIndex - 1][horizontalIndex].tileType,
-                room[verticalIndex + 1][horizontalIndex].tileType,
-                room[verticalIndex][horizontalIndex - 1].tileType];
+        return [
+            room[verticalIndex - 1][horizontalIndex].tileType,
+            room[verticalIndex + 1][horizontalIndex].tileType,
+            room[verticalIndex][horizontalIndex - 1].tileType,
+        ];
     }
-}
+};
 
 export const roomProcessing = (room, roomSize) => {
     // console.log('room before', [...room]);
-    for (let verticalIndex = 0; verticalIndex < roomSize; verticalIndex++) {
-        for (let horizontalIndex = 0; horizontalIndex < roomSize; horizontalIndex++) {
-            let tile = room[verticalIndex][horizontalIndex];
-            if (tile.tileType === 'wall') {
-                // if (tile.boundaryType === 'none') {
-                //     const south = room[verticalIndex - 1][horizontalIndex].tileType;
-                //     const north = room[verticalIndex + 1][horizontalIndex].tileType;
-                //     const west = room[verticalIndex][horizontalIndex - 1].tileType;
-                //     const east = room[verticalIndex][horizontalIndex + 1].tileType;
-                //     if (checkAllElementsInListEqualValue([south, east, north, west], 'open')) {
-                //         // console.log('before', verticalIndex, horizontalIndex, north, south, east, west, tile.tileType);
-                //         tile.tileType = 'open';
-                //         // console.log('executed if statement');
-                //         // console.log('after:', verticalIndex, horizontalIndex, north, south, east, west, tile.tileType);
-                //     }
-                // } else {
-                //     const neighbors = getNeighborTileTypes();
-                //     if (checkAllElementsInListEqualValue(neighbors, 'open')) {
-
-                //     }
-                // }
-                const neighbors = getNeighborTileTypes(room, verticalIndex, horizontalIndex, tile);
-                if (checkAllElementsInListEqualValue(neighbors, 'open')) {
-                    tile.tileType = 'open';
+    let footPositions = [];
+    for (let i = 0; i < 3; i++) {
+        //Process 3 times
+        for (let verticalIndex = 0; verticalIndex < roomSize; verticalIndex++) {
+            for (let horizontalIndex = 0; horizontalIndex < roomSize; horizontalIndex++) {
+                let tile = room[verticalIndex][horizontalIndex];
+                if (tile.tileType === 'wall') {
+                    const neighbors = getNeighborTileTypes(room, verticalIndex, horizontalIndex, tile);
+                    if (checkAllElementsInListEqualValue(neighbors, 'open')) {
+                        tile.tileType = 'open';
+                    }
+                } else if (tile.tileType === 'open') {
+                    const neighbors = getNeighborTileTypes(room, verticalIndex, horizontalIndex, tile);
+                    let wallcount = 0;
+                    neighbors.map((e) => {
+                        if (e === 'wall') wallcount++;
+                    });
+                    if (wallcount >= neighbors.length - 1) tile.tileType = 'wall';
                 }
-            } else if (tile.tileType === 'open') {
-                const neighbors = getNeighborTileTypes(room, verticalIndex, horizontalIndex, tile);
-                let wallcount = 0;
-                neighbors.map((e) => {
-                    if (e === 'wall') wallcount++;
-                });
-                if (wallcount >= neighbors.length - 1) tile.tileType = 'wall';
             }
         }
     }
@@ -156,26 +150,42 @@ export const roomProcessing = (room, roomSize) => {
         for (let horizontalIndex = 0; horizontalIndex < roomSize; horizontalIndex++) {
             let tile = room[verticalIndex][horizontalIndex];
             if (tile.tileType === 'wall') {
-                if ((tile.boundaryType !== 'sw-corner' && tile.boundaryType !== 'se-corner' && tile.boundaryType !== 'south-edge') && room[verticalIndex + 1][horizontalIndex].tileType === 'open') {
+                if (
+                    tile.boundaryType !== 'sw-corner' &&
+                    tile.boundaryType !== 'se-corner' &&
+                    tile.boundaryType !== 'south-edge' &&
+                    room[verticalIndex + 1][horizontalIndex].tileType === 'open'
+                ) {
                     tile.tileStyle = 'foot';
+                    footPositions.push([verticalIndex, horizontalIndex]);
                 } else tile.tileStyle = 'wall';
             }
             // TODO: This breaks the processing step because it changes tileType to head! The fucntional tag and style tag should be different elements
             if (tile.tileType === 'open') {
-                if ((tile.boundaryType !== 'sw-corner' && tile.boundaryType !== 'se-corner' && tile.boundaryType !== 'south-edge') && room[verticalIndex + 1][horizontalIndex].tileType === 'wall')
+                if (
+                    tile.boundaryType !== 'sw-corner' &&
+                    tile.boundaryType !== 'se-corner' &&
+                    tile.boundaryType !== 'south-edge' &&
+                    room[verticalIndex + 1][horizontalIndex].tileType === 'wall'
+                )
                     tile.tileStyle = 'head';
                 else tile.tileStyle = 'open';
             }
         }
     }
+    const entranceRoll = betweenGeneratorInteger(0, footPositions.length);
+    let exitRoll = betweenGeneratorInteger(0, footPositions.length);
+    while (exitRoll === entranceRoll) {
+        exitRoll = betweenGeneratorInteger(0, footPositions.length);
+    }
+    const entrance = room[footPositions[entranceRoll][0]][footPositions[entranceRoll][1]];
+    const exit = room[footPositions[exitRoll][0]][footPositions[exitRoll][1]];
+    console.log(entrance, exit);
+    entrance.tileStyle = 'entrance';
+    exit.tileStyle = 'exit';
+    // entrance.tileType = 'entrance';
+    // exit.tileType = 'exit';
     return room;
-};
-
-export const AssignStyles = (room, roomSize) => {
-    //This is where I want to put all of the style assignment functions
-    //Have to extract them from RoomProcessing, which should only change opens to walls and vice versa as needed
-    //Idea being that "wall" vs "open" is a functional difference (movement) whereas tileStyle is just visual
-    //By the way - styles are assigned CSS classes in the rngUtils.js file, under AssignTileTextures, which is called here.
 };
 
 // const drawPaths = (room, initialNodes) => {

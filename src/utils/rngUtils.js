@@ -11,5 +11,9 @@ export const assignTileTexture = (tileStyle) => {
         return 'foot wall';
     } else if (tileStyle === 'head') {
         return 'head wall';
+    } else if (tileStyle === 'entrance') {
+        return 'entrance';
+    } else if (tileStyle === 'exit') {
+        return 'exit';
     }
 };

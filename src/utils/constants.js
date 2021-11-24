@@ -26,7 +26,7 @@ export const INITIAL_STATS = [
     },
 ];
 
-export const TILE_COUNT = 30;
+export const TILE_COUNT = 50;
 export const NODE_COUNT = TILE_COUNT / 5;
 export const DENSITY = 0.35;
 export const MAX_RADIUS = TILE_COUNT / 10;
