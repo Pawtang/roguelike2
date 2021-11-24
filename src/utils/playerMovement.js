@@ -1,7 +1,10 @@
 export const movementHandler = (e) => {
     if (e.keyCode == '38') {
         // up arrow
-        // player.ypos--
+        // let tileToLeft = room[horizontalIndex[player.ypos - 1][verticalIndex[player.xpos]
+        //if (player.ypos > 0 && tileToleft.tileType !== 'wall'){
+        //player.ypos-- };
+        //
         console.log('up');
     } else if (e.keyCode == '40') {
         // down arrow
