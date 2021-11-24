@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { roomGenerator, roomProcessing } from './utils/mapGenerationUtils';
 import { NODE_COUNT, TILE_COUNT } from './utils/constants';
 import { assignTileTexture } from './utils/rngUtils';
+import { movementHandler } from './utils/playerMovement';
 
 const Exploration = (props) => {
     const { currentRoomNumber, rooms, setRooms } = props;
@@ -10,6 +11,11 @@ const Exploration = (props) => {
     const [inventorystate, setInventoryState] = useState('invclosed');
     const tileWidth = 600 / TILE_COUNT;
     //This array should be generated...
+
+    React.useEffect(() => {
+        window.addEventListener('keydown', movementHandler);
+    }, []);
+
     return (
         <div className="exploration">
             <div className="flexcolumn center">

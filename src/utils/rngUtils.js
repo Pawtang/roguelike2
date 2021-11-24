@@ -1,6 +1,7 @@
 export const intGenerator = (maxValue) => Math.trunc(Math.random() * maxValue);
 export const betweenGenerator = (minValue, maxValue) => intGenerator(maxValue - minValue) + minValue + Math.random();
 export const betweenGeneratorInteger = (minValue, maxValue) => intGenerator(maxValue - minValue) + minValue;
+
 export const assignTileTexture = (tileStyle) => {
     if (tileStyle === 'open') {
         return `floor${betweenGeneratorInteger(1, 3)}`;
@@ -15,5 +16,7 @@ export const assignTileTexture = (tileStyle) => {
         return 'entrance';
     } else if (tileStyle === 'exit') {
         return 'exit';
+    } else if (tileStyle === 'player') {
+        return 'player';
     }
 };

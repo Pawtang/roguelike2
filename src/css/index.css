@@ -221,6 +221,11 @@ button:hover {
     );
 }
 
+.player {
+    background-color: red;
+    border-radius: 5px;
+}
+
 .head {
     background: rgb(88, 88, 88);
     background: linear-gradient(0deg, rgba(88, 88, 88, 1) 46%, rgba(100, 100, 100, 1) 51%, rgba(187, 230, 208, 1) 51%);
