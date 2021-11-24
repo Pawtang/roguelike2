@@ -120,7 +120,7 @@ const getNeighborTileTypes = (room, verticalIndex, horizontalIndex, tile) => {
     }
 };
 
-export const roomProcessing = (room, roomSize) => {
+export const roomProcessing = (room, roomSize, setPlayerLocation) => {
     // console.log('room before', [...room]);
     let footPositions = [];
     for (let i = 0; i < 3; i++) {
@@ -183,6 +183,7 @@ export const roomProcessing = (room, roomSize) => {
     console.log(entrance, exit);
     entrance.tileStyle = 'entrance';
     exit.tileStyle = 'exit';
+    setPlayerLocation(footPositions[entranceRoll]);
     // entrance.tileType = 'entrance';
     // exit.tileType = 'exit';
     return room;

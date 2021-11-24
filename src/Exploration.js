@@ -10,6 +10,7 @@ const Exploration = (props) => {
     const currentRoom = rooms[currentRoomNumber];
     const [inventorystate, setInventoryState] = useState('invclosed');
     const tileWidth = 600 / TILE_COUNT;
+    const [playerLocation, setPlayerLocation] = useState([0, 0]);
     //This array should be generated...
 
     React.useEffect(() => {
@@ -44,7 +45,7 @@ const Exploration = (props) => {
             {inventorystate === 'invopen' && <button onClick={() => setInventoryState('invclosed')}>Inventory</button>}
             {inventorystate === 'invclosed' && <button onClick={() => setInventoryState('invopen')}>Inventory</button>}
             <button onClick={() => setRooms([roomGenerator(NODE_COUNT)])}>Re-Draw</button>
-            <button onClick={() => setRooms([roomProcessing(currentRoom, TILE_COUNT)])}>Process</button>
+            <button onClick={() => setRooms([roomProcessing(currentRoom, TILE_COUNT, setPlayerLocation)])}>Process</button>
             {inventorystate === 'invopen' && <Inventory />}
         </div>
     );
