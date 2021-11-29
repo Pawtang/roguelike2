@@ -12,6 +12,7 @@ export const Exploration = (props) => {
     const tileWidth = 800 / TILE_COUNT;
     const [playerLocation, setPlayerLocation] = useState([0, 0]);
     const setPlayerLocationCb = (location) => setPlayerLocation(location);
+    console.log(playerLocation);
 
     const handleMovementKeyDown = useCallback((e) => {
         movementHandler(e, setPlayerLocationCb, playerLocation);
