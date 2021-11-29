@@ -13,14 +13,13 @@ export const Exploration = (props) => {
     const [playerLocation, setPlayerLocation] = useState([0, 0]);
     const setPlayerLocationCb = (location) => setPlayerLocation(location);
 
-    const handleMovementKeyDown = useCallback(e => {
-            movementHandler(e, setPlayerLocationCb)
-        }, [])
+    const handleMovementKeyDown = useCallback((e) => {
+        movementHandler(e, setPlayerLocationCb, playerLocation);
+    }, []);
 
     React.useEffect(() => {
         window.addEventListener('keydown', handleMovementKeyDown);
-
-        return window.removeEventListener('keydown', handleMovementKeyDown);
+        // return window.removeEventListener('keydown', handleMovementKeyDown);
     }, []);
 
     return (
