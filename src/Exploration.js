@@ -1,5 +1,5 @@
 import Inventory from './Inventory';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { roomGenerator, roomProcessing } from './utils/mapGenerationUtils';
 import { NODE_COUNT, TILE_COUNT } from './utils/constants';
 import { assignTileTexture } from './utils/rngUtils';
@@ -11,10 +11,16 @@ export const Exploration = (props) => {
     const [inventorystate, setInventoryState] = useState('invclosed');
     const tileWidth = 800 / TILE_COUNT;
     const [playerLocation, setPlayerLocation] = useState([0, 0]);
-    //This array should be generated...
+    const setPlayerLocationCb = (location) => setPlayerLocation(location);
+
+    const handleMovementKeyDown = useCallback(e => {
+            movementHandler(e, setPlayerLocationCb)
+        }, [])
 
     React.useEffect(() => {
-        window.addEventListener('keydown', (e) => movementHandler(e, playerLocation, setPlayerLocation));
+        window.addEventListener('keydown', handleMovementKeyDown);
+
+        return window.removeEventListener('keydown', handleMovementKeyDown);
     }, []);
 
     return (

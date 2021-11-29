@@ -15,7 +15,6 @@ const GameArea = (props) => {
     const [stats, setStats] = useState(INITIAL_STATS);
     const [rooms, setRooms] = useState([roomGenerator(NODE_COUNT)]);
     const [currentRoomNumber, setCurrentRoomNumber] = useState(0);
-    const [playerLocation, setPlayerLocation] = useState([0, 0]);
 
     return (
         <div>
