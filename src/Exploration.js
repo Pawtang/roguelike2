@@ -5,20 +5,20 @@ import { NODE_COUNT, TILE_COUNT } from './utils/constants';
 import { assignTileTexture } from './utils/rngUtils';
 import { movementHandler } from './utils/playerMovement';
 
-const Exploration = (props) => {
+export const Exploration = (props) => {
     const { currentRoomNumber, rooms, setRooms } = props;
     const currentRoom = rooms[currentRoomNumber];
     const [inventorystate, setInventoryState] = useState('invclosed');
-    const tileWidth = 600 / TILE_COUNT;
+    const tileWidth = 800 / TILE_COUNT;
     const [playerLocation, setPlayerLocation] = useState([0, 0]);
     //This array should be generated...
 
     React.useEffect(() => {
-        window.addEventListener('keydown', movementHandler);
+        window.addEventListener('keydown', (e) => movementHandler(e, playerLocation, setPlayerLocation));
     }, []);
 
     return (
-        <div className="exploration">
+        <div className="exploration" id="mapArea">
             <div className="flexcolumn center">
                 <div
                     style={{
@@ -45,7 +45,9 @@ const Exploration = (props) => {
             {inventorystate === 'invopen' && <button onClick={() => setInventoryState('invclosed')}>Inventory</button>}
             {inventorystate === 'invclosed' && <button onClick={() => setInventoryState('invopen')}>Inventory</button>}
             <button onClick={() => setRooms([roomGenerator(NODE_COUNT)])}>Re-Draw</button>
-            <button onClick={() => setRooms([roomProcessing(currentRoom, TILE_COUNT, setPlayerLocation)])}>Process</button>
+            <button onClick={() => setRooms([roomProcessing(currentRoom, TILE_COUNT, setPlayerLocation)])}>
+                Process
+            </button>
             {inventorystate === 'invopen' && <Inventory />}
         </div>
     );

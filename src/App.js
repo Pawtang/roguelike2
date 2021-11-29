@@ -3,6 +3,7 @@ import GameArea from './GameArea';
 
 const App = () => {
     const [gamestate, setGamestate] = useState('mainmenu');
+
     return (
         <div className="container flexcolumn center">
             <div className="flexrow center">
