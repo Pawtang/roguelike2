@@ -13,7 +13,12 @@ const GameArea = (props) => {
     // Curly braces = javascript
     const { gamestate, setGamestate } = props;
     const [stats, setStats] = useState(INITIAL_STATS);
-    const [rooms, setRooms] = useState([roomGenerator(NODE_COUNT)]);
+    const [playerLocation, setPlayerLocation] = useState([0, 0]);
+    // const setPlayerLocationCallback = useCallback((e) => {
+    //     movementHandler(e, setPlayerLocationCb, playerLocation);
+    // }, []);
+    const [rooms, setRooms] = useState([roomGenerator([])]);
+    // const [rooms, setRooms] = useState([roomGenerator(NODE_COUNT, setPlayerLocation)]);
     const [currentRoomNumber, setCurrentRoomNumber] = useState(0);
 
     return (
@@ -22,7 +27,13 @@ const GameArea = (props) => {
             <div className="gameArea">
                 {gamestate === 'mainmenu' && <MainMenu gamestate={gamestate} setGamestate={setGamestate} />}
                 {gamestate === 'exploration' && (
-                    <Exploration rooms={rooms} setRooms={setRooms} currentRoomNumber={currentRoomNumber} />
+                    <Exploration
+                        rooms={rooms}
+                        setRooms={setRooms}
+                        currentRoomNumber={currentRoomNumber}
+                        playerLocation={playerLocation}
+                        setPlayerLocation={setPlayerLocation}
+                    />
                 )}
                 {gamestate === 'shop' && <Shop />}
                 {/*removed gameState prop for now because we don't use it, we only want to pass around relevant information*/}

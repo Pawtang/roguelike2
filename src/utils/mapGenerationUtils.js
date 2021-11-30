@@ -1,7 +1,7 @@
 import { DENSITY, MAX_RADIUS, TILE_COUNT } from './constants';
-import { betweenGenerator, intGenerator, betweenGeneratorInteger } from './rngUtils';
+import { betweenGenerator, intGenerator, betweenGeneratorInteger, assignTileTexture } from './rngUtils';
 
-export const roomGenerator = (nodeNumber) => {
+export const roomGenerator = (nodeNumber, setPlayerLocation) => {
     const room = [];
     const roomSize = TILE_COUNT;
     const initialNodes = [];
@@ -21,20 +21,90 @@ export const roomGenerator = (nodeNumber) => {
             if (tileType === 'wall') {
                 tileType = Math.random() < DENSITY ? 'wall' : 'open';
             }
-            let tileStyle = ''; //Initialize tileStyle
-            tileStyle = tileType === 'wall' ? 'wall' : 'open';
+
             row.push({
                 boundaryType: assignBoundaryType(roomSize - 1, verticalIndex, horizontalIndex),
                 tileType,
-                tileStyle,
                 hasBeenTraveled: false,
                 tileNumber: verticalIndex * roomSize + horizontalIndex,
             });
         }
         room.push(row);
     }
+    // return room;
+    console.log('Room Processing');
+    console.log(room);
+    return roomProcessing(room, roomSize, setPlayerLocation);
+};
+
+export const roomProcessing = (room, roomSize, setPlayerLocation) => {
+    // console.log('room before', [...room]);
+    // tileStyle = tileType === 'wall' ? 'wall' : 'open';
+    let footPositions = [];
+    for (let i = 0; i < 3; i++) {
+        //Process 3 times
+        for (let verticalIndex = 0; verticalIndex < roomSize; verticalIndex++) {
+            for (let horizontalIndex = 0; horizontalIndex < roomSize; horizontalIndex++) {
+                let tile = room[verticalIndex][horizontalIndex];
+                if (tile.tileType === 'wall') {
+                    const neighbors = getNeighborTileTypes(room, verticalIndex, horizontalIndex, tile);
+                    if (checkAllElementsInListEqualValue(neighbors, 'open')) {
+                        tile.tileType = 'open';
+                    }
+                } else if (tile.tileType === 'open') {
+                    const neighbors = getNeighborTileTypes(room, verticalIndex, horizontalIndex, tile);
+                    let wallcount = 0;
+                    neighbors.map((e) => {
+                        if (e === 'wall') wallcount++;
+                    });
+                    if (wallcount >= neighbors.length - 1) tile.tileType = 'wall';
+                }
+            }
+        }
+    }
+
+    // console.log('room after', room);
+    for (let verticalIndex = 0; verticalIndex < roomSize; verticalIndex++) {
+        for (let horizontalIndex = 0; horizontalIndex < roomSize; horizontalIndex++) {
+            let tile = room[verticalIndex][horizontalIndex];
+            if (tile.tileType === 'wall') {
+                if (
+                    tile.boundaryType !== 'sw-corner' &&
+                    tile.boundaryType !== 'se-corner' &&
+                    tile.boundaryType !== 'south-edge' &&
+                    room[verticalIndex + 1][horizontalIndex].tileType === 'open'
+                ) {
+                    tile.tileStyle = assignTileTexture('foot');
+                    footPositions.push([verticalIndex, horizontalIndex]);
+                } else tile.tileStyle = assignTileTexture('wall');
+            }
+            if (tile.tileType === 'open') {
+                if (
+                    tile.boundaryType !== 'sw-corner' &&
+                    tile.boundaryType !== 'se-corner' &&
+                    tile.boundaryType !== 'south-edge' &&
+                    room[verticalIndex + 1][horizontalIndex].tileType === 'wall'
+                )
+                    tile.tileStyle = assignTileTexture('head');
+                else tile.tileStyle = assignTileTexture('open');
+            }
+        }
+    }
+
+    const entranceRoll = betweenGeneratorInteger(0, footPositions.length);
+    let exitRoll = betweenGeneratorInteger(0, footPositions.length);
+    while (exitRoll === entranceRoll) {
+        exitRoll = betweenGeneratorInteger(0, footPositions.length);
+    }
+    const entrance = room[footPositions[entranceRoll][0]][footPositions[entranceRoll][1]];
+    const exit = room[footPositions[exitRoll][0]][footPositions[exitRoll][1]];
+    // console.log(entrance, exit);
+    entrance.tileStyle = assignTileTexture('entrance');
+    exit.tileStyle = assignTileTexture('exit');
+    // setPlayerLocation((prevPlayerLocation) => footPositions[entranceRoll]);
+    // entrance.tileType = 'entrance';
+    // exit.tileType = 'exit';
     return room;
-    // return roomProcessing(room, roomSize);
 };
 
 const assignBoundaryType = (roomSize, rowIndex, columnIndex) => {
@@ -66,7 +136,7 @@ const drawOpenSpace = (nodes, i, j) => {
         const node = nodes[nodeIndex];
         const distance = Math.sqrt((i - node[0]) ** 2 + (j - node[1]) ** 2);
         if (distance <= node[2]) {
-            return node[0] === i && node[1] === j ? 'openCenter' : 'open';
+            return 'open';
         }
     }
     return 'wall';
@@ -118,75 +188,6 @@ const getNeighborTileTypes = (room, verticalIndex, horizontalIndex, tile) => {
             room[verticalIndex][horizontalIndex - 1].tileType,
         ];
     }
-};
-
-export const roomProcessing = (room, roomSize, setPlayerLocation) => {
-    // console.log('room before', [...room]);
-    let footPositions = [];
-    for (let i = 0; i < 3; i++) {
-        //Process 3 times
-        for (let verticalIndex = 0; verticalIndex < roomSize; verticalIndex++) {
-            for (let horizontalIndex = 0; horizontalIndex < roomSize; horizontalIndex++) {
-                let tile = room[verticalIndex][horizontalIndex];
-                if (tile.tileType === 'wall') {
-                    const neighbors = getNeighborTileTypes(room, verticalIndex, horizontalIndex, tile);
-                    if (checkAllElementsInListEqualValue(neighbors, 'open')) {
-                        tile.tileType = 'open';
-                    }
-                } else if (tile.tileType === 'open') {
-                    const neighbors = getNeighborTileTypes(room, verticalIndex, horizontalIndex, tile);
-                    let wallcount = 0;
-                    neighbors.map((e) => {
-                        if (e === 'wall') wallcount++;
-                    });
-                    if (wallcount >= neighbors.length - 1) tile.tileType = 'wall';
-                }
-            }
-        }
-    }
-
-    // console.log('room after', room);
-    for (let verticalIndex = 0; verticalIndex < roomSize; verticalIndex++) {
-        for (let horizontalIndex = 0; horizontalIndex < roomSize; horizontalIndex++) {
-            let tile = room[verticalIndex][horizontalIndex];
-            if (tile.tileType === 'wall') {
-                if (
-                    tile.boundaryType !== 'sw-corner' &&
-                    tile.boundaryType !== 'se-corner' &&
-                    tile.boundaryType !== 'south-edge' &&
-                    room[verticalIndex + 1][horizontalIndex].tileType === 'open'
-                ) {
-                    tile.tileStyle = 'foot';
-                    footPositions.push([verticalIndex, horizontalIndex]);
-                } else tile.tileStyle = 'wall';
-            }
-            // TODO: This breaks the processing step because it changes tileType to head! The fucntional tag and style tag should be different elements
-            if (tile.tileType === 'open') {
-                if (
-                    tile.boundaryType !== 'sw-corner' &&
-                    tile.boundaryType !== 'se-corner' &&
-                    tile.boundaryType !== 'south-edge' &&
-                    room[verticalIndex + 1][horizontalIndex].tileType === 'wall'
-                )
-                    tile.tileStyle = 'head';
-                else tile.tileStyle = 'open';
-            }
-        }
-    }
-    const entranceRoll = betweenGeneratorInteger(0, footPositions.length);
-    let exitRoll = betweenGeneratorInteger(0, footPositions.length);
-    while (exitRoll === entranceRoll) {
-        exitRoll = betweenGeneratorInteger(0, footPositions.length);
-    }
-    const entrance = room[footPositions[entranceRoll][0]][footPositions[entranceRoll][1]];
-    const exit = room[footPositions[exitRoll][0]][footPositions[exitRoll][1]];
-    console.log(entrance, exit);
-    entrance.tileStyle = 'entrance';
-    exit.tileStyle = 'exit';
-    setPlayerLocation(footPositions[entranceRoll]);
-    // entrance.tileType = 'entrance';
-    // exit.tileType = 'exit';
-    return room;
 };
 
 // const drawPaths = (room, initialNodes) => {

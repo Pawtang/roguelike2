@@ -6,11 +6,10 @@ import { assignTileTexture } from './utils/rngUtils';
 import { movementHandler } from './utils/playerMovement';
 
 export const Exploration = (props) => {
-    const { currentRoomNumber, rooms, setRooms } = props;
+    const { currentRoomNumber, rooms, setRooms, playerLocation, setPlayerLocation } = props;
     const currentRoom = rooms[currentRoomNumber];
     const [inventorystate, setInventoryState] = useState('invclosed');
     const tileWidth = 800 / TILE_COUNT;
-    const [playerLocation, setPlayerLocation] = useState([0, 0]);
     const setPlayerLocationCb = (location) => setPlayerLocation(location);
     console.log(playerLocation);
 
@@ -20,7 +19,7 @@ export const Exploration = (props) => {
 
     React.useEffect(() => {
         window.addEventListener('keydown', handleMovementKeyDown);
-        // return window.removeEventListener('keydown', handleMovementKeyDown);
+        return () => window.removeEventListener('keydown', handleMovementKeyDown);
     }, []);
 
     return (
@@ -42,7 +41,8 @@ export const Exploration = (props) => {
                                         width: `${tileWidth}px`,
                                         height: `${tileWidth}px`,
                                     }}
-                                    className={`maptile ${assignTileTexture(tile.tileStyle)}`}
+                                    id={tile.tileNumber}
+                                    className={`maptile ${tile.tileStyle}`}
                                 />
                             ))
                         )}
@@ -50,7 +50,6 @@ export const Exploration = (props) => {
             </div>
             {inventorystate === 'invopen' && <button onClick={() => setInventoryState('invclosed')}>Inventory</button>}
             {inventorystate === 'invclosed' && <button onClick={() => setInventoryState('invopen')}>Inventory</button>}
-            <button onClick={() => setRooms([roomGenerator(NODE_COUNT)])}>Re-Draw</button>
             <button onClick={() => setRooms([roomProcessing(currentRoom, TILE_COUNT, setPlayerLocation)])}>
                 Process
             </button>
