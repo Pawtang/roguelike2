@@ -43,16 +43,16 @@ export const Exploration = (props) => {
                                     }}
                                     id={tile.tileNumber}
                                     className={`maptile ${tile.tileStyle}`}
-                                />
+                                >
+                                    {tile.tileType}
+                                </div>
                             ))
                         )}
                 </div>
             </div>
             {inventorystate === 'invopen' && <button onClick={() => setInventoryState('invclosed')}>Inventory</button>}
             {inventorystate === 'invclosed' && <button onClick={() => setInventoryState('invopen')}>Inventory</button>}
-            <button onClick={() => setRooms([roomProcessing(currentRoom, TILE_COUNT, setPlayerLocation)])}>
-                Process
-            </button>
+            <button onClick={() => setRooms([roomGenerator(NODE_COUNT, setPlayerLocation)])}>Re-Roll Map</button>
             {inventorystate === 'invopen' && <Inventory />}
         </div>
     );

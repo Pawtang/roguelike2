@@ -10,7 +10,6 @@ import { roomGenerator } from './utils/mapGenerationUtils';
 import { INITIAL_STATS, NODE_COUNT } from './utils/constants';
 
 const GameArea = (props) => {
-    // Curly braces = javascript
     const { gamestate, setGamestate } = props;
     const [stats, setStats] = useState(INITIAL_STATS);
     const [playerLocation, setPlayerLocation] = useState([0, 0]);

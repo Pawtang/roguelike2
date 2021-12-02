@@ -1,6 +1,6 @@
 import { TILE_COUNT } from './constants.js';
 
-export const movementHandler = (e, setPlayerLocation, playerLocation) => {
+export const movementHandler = (e, setPlayerLocation) => {
     e.preventDefault();
     if (e.code === 'ArrowUp') {
         console.log('up');

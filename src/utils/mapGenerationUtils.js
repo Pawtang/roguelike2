@@ -32,8 +32,6 @@ export const roomGenerator = (nodeNumber, setPlayerLocation) => {
         room.push(row);
     }
     // return room;
-    console.log('Room Processing');
-    console.log(room);
     return roomProcessing(room, roomSize, setPlayerLocation);
 };
 
@@ -104,6 +102,7 @@ export const roomProcessing = (room, roomSize, setPlayerLocation) => {
     // setPlayerLocation((prevPlayerLocation) => footPositions[entranceRoll]);
     // entrance.tileType = 'entrance';
     // exit.tileType = 'exit';
+    console.log(room);
     return room;
 };
 
