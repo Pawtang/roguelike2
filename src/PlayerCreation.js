@@ -29,7 +29,7 @@ const PlayerCreation = (props) => {
         int: '',
         intchr: '',
         intlck: '',
-        chr: "You've found your way through life not by force or by skill, but by making close friends out of dangerous strangers. There's always a guy you know who can solve any problem you come accross.",
+        chr: "You've found your way through life not by force or by skill, but by making close friends out of dangerous strangers. There's always a guy you know who can solve any problem you come across.",
         chrlck: "People would hate you if you weren't so damn charming. People are disbelieving that things just keep going right for you. They may express jealousy behind your back, but as soon as you start the conversation, they beam at you.",
         lck: "You've somehow always managed to fail upwards in life. You're not particularily good at anything, but always seem to be in the right place at the right time.",
     };
@@ -37,11 +37,11 @@ const PlayerCreation = (props) => {
     const getNarritive = (stats) => {
         switch (true) {
             case stats[0].value > 15:
-                return narritives.str;
+                return narritives.default;
             case stats[0].value > 10 && stats[1].value > 10:
-                return narritives.str;
+                return narritives.default;
             default:
-                return narritives.chr;
+                return narritives.default;
         }
     };
 
