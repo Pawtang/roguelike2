@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/roguelike2/static/css/main.ca5de8b8.chunk.css",
+    "main.js": "/roguelike2/static/js/main.84baff3e.chunk.js",
+    "main.js.map": "/roguelike2/static/js/main.84baff3e.chunk.js.map",
+    "runtime-main.js": "/roguelike2/static/js/runtime-main.ef88cd07.js",
+    "runtime-main.js.map": "/roguelike2/static/js/runtime-main.ef88cd07.js.map",
+    "static/js/2.837dd982.chunk.js": "/roguelike2/static/js/2.837dd982.chunk.js",
+    "static/js/2.837dd982.chunk.js.map": "/roguelike2/static/js/2.837dd982.chunk.js.map",
+    "index.html": "/roguelike2/index.html",
+    "static/css/main.ca5de8b8.chunk.css.map": "/roguelike2/static/css/main.ca5de8b8.chunk.css.map",
+    "static/js/2.837dd982.chunk.js.LICENSE.txt": "/roguelike2/static/js/2.837dd982.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/roguelike2/static/media/bg.94c388e3.jpg",
+    "static/media/sprites.css": "/roguelike2/static/media/weaponsprites.c22965bf.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ef88cd07.js",
+    "static/js/2.837dd982.chunk.js",
+    "static/css/main.ca5de8b8.chunk.css",
+    "static/js/main.84baff3e.chunk.js"
+  ]
+}
