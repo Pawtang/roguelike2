@@ -3,7 +3,7 @@ function MainMenu(props) {
     return (
         <div className="menu">
             <div className="menuHeader">
-                <h1 id="title">CYBER COWBOY 2077</h1>
+                <h1 id="title">ROGUELIKE 2</h1>
             </div>
             <div className="flexcolumn center">
                 <button onClick={() => setGamestate('creation')} class="menubtn">
